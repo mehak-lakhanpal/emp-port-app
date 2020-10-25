@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/header %>
+  <script>
+    async function register() {
+      const form = new FormData(document.getElementById("registerForm"));
+       const res = await fetch(`http://localhost:3000/user/register`, {
+         method: "POST",
+         body: form
+        }
+     );
+     const result = await res.json();
+     console.log(res)
+    if(res.status===400){
+      if(result.errors){
+        var str = '<ul>';
+         Object.values(result.errors).forEach(error => { 
+          str += '<li class="text-danger">'+ error.msg + '</li>';
+      })
+        str+='</ul>';
+        document.getElementById("error").innerHTML = str;
+      }else{
+        alert(result.message);
+        document.getElementById("error").innerHTML = "";
+      }
+   }else if(res.status===201){
+    var path  = "http://localhost:3000/user/login";
+      window.location.replace(path);
+   }
+   }
+ </script>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/navigation %>
+  </header>
+
+  <div class="form-header text-primary">
+    <h2>Please Register</h2>
+    </div>
+  <div id="error"></div>
+
+  <form id="registerForm" onsubmit="return false;" enctype='multipart/form-data'>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Enter username" value="<%- user.username%>">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" placeholder="Password" value="<%- user.password%>">
+    </div>
+    <div class="form-group form-check">
+      <label for="role">Role</label>
+      <br>
+      <select class="custom-select" name="role">
+        <option selected value="employee">Employee</option>
+        <option value="manager">Manager</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="photo">Profile Picture</label>
+      <br>
+    <input type="file" accept="image/*" name="photo" >
+    </div>
+    <button type="submit" class="btn btn-primary"  onclick="register()">Submit</button>
+  </form>
+
+</body>
+
+<footer class="page-footer">
+  <% include ../partials/footer %>
+</footer>
+
+</html>

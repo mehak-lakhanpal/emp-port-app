@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/header %>
+  <script>
+    async function login() {
+      const form = new FormData(document.getElementById("loginForm"));
+      const username = form.get('username');
+      const password = form.get('password');
+       const res = await fetch(`http://localhost:3000/user/login`, {
+         method: "POST",
+         headers:{
+           'content-type': 'application/json'
+         },
+         body: JSON.stringify({username,password})
+        }
+     );
+     const result = await res.json();
+     console.log(res)
+     if(res.status===401){
+       alert(result.message);
+       document.getElementById("error").innerHTML = "";
+     }else if(res.status===400){
+      var str = '<ul>';
+         Object.values(result.errors).forEach(error => { 
+          str += '<li class="text-danger">'+ error.msg + '</li>';
+      })
+      str+='</ul>';
+      document.getElementById("error").innerHTML = str;
+   }else if(res.ok){
+    var path  = "http://localhost:3000/openings";
+      window.location.replace(path);
+   }
+   }
+ </script>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/navigation %>
+  </header>
+  <div class="form-header text-primary">
+    <h2>Please Login!</h2>
+    </div>
+  <div id="error"></div>
+
+  <form id="loginForm" onsubmit="return false;">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Enter username" value="<%- user.username%>">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" placeholder="Password" value="<%- user.password%>">
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="login()">Submit</button>
+  </form>
+
+</body>
+
+<footer class="page-footer">
+  <% include ../partials/footer %>
+</footer>
+
+</html>

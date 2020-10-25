@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/header %>
+  <script>
+    async function apply(openingId) {
+       const res = await fetch(`http://localhost:3000/openings/apply/${openingId}`, {
+         method: "GET",
+         headers:{
+           'content-type': 'application/json'
+         }
+        }
+     );
+     const result = await res.json();
+     alert(result.message);
+     if(!result.error){
+      var path  = "http://localhost:3000/openings";
+      window.location.replace(path);
+     }
+   }
+ </script>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/navigation %>
+  </header>
+
+  <h2>Opening Detail</h2>
+  <br>
+  <table class="table bg">
+    <tbody>
+      <tr>
+        <th scope="row">Project</th>
+        <td><%=opening.project%></td>
+      </tr>
+      <tr>
+        <th scope="row">Client</th>
+        <td><%=opening.client%></td>
+      </tr>
+      <tr>
+        <th scope="row">Technologies Required</th>
+        <td><%=opening.technologies%></td>
+      </tr>
+      <tr>
+        <th scope="row">Role</th>
+        <td><%=opening.role%></td>
+      </tr>
+      <tr>
+        <th scope="row">Description</th>
+        <td><%=opening.desc%></td>
+      </tr>
+      <%if (locals.isAuthenticated) { %>
+        <%if (locals.isAuthenticated==='employee') { %>
+          <tr>
+            <th colspan="2" scope="row"> <a id="apply" onclick="apply('<%=opening._id%>')" class="btn btn-primary">Apply</a></th>
+          </tr>
+      <% } %>
+      <% } %> 
+    </tbody>
+  </table>
+
+</body>
+
+<footer class="page-footer">
+  <% include ../partials/footer %>
+</footer>
+
+</html>

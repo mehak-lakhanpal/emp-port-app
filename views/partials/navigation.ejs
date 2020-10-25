@@ -1,0 +1,52 @@
+
+<html>
+  <head>
+    <script>
+       async function logout() {
+          const res = await fetch("http://localhost:3000/user/logout", {
+            method: "POST",
+            headers:{
+              'content-type': 'application/json'
+            }
+          }
+        );
+        const result = await res.json();
+        var path  = "http://localhost:3000/";
+        window.location.replace(path);
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+  
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">
+          <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
+          Home
+        </a>
+  
+        <ul class="nav navbar-nav">
+          <%if (locals.isAuthenticated) { %>
+            <li><a href="/openings">Openings</a></li>
+              <%if (locals.isAuthenticated==='manager') { %>
+                <li><a href="/openings/create">Create openings</a></li>
+                <% } %>
+            <% } %> 
+            <%if (!locals.isAuthenticated) { %>
+              <li><a href="/user/register">Register</a></li>
+              <li><a href="/user/login">Login</a></li>
+              <% } %> 
+              <%if (locals.isAuthenticated) { %>
+                <li>  <a class="btn btn-default btn-lg">
+                  <span class="glyphicon glyphicon-user"></span> Hi, <%=locals.username%> 
+                </a></li>
+                <li><a onClick="logout()">Logout</a></li>
+                <% } %> 
+        </ul>
+      </div>
+  
+    </div>
+  </nav>
+ </body>
+ </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/header %>
+  <script>
+    async function createOpening() {
+      const form = new FormData(document.getElementById("createOpeningForm"));
+      const project = form.get('project');
+      const client = form.get('client');
+      const technologies = form.get('technologies');
+      const role = form.get('role');
+      const desc = form.get('desc');
+      const status = form.get('status');
+       const res = await fetch(`http://localhost:3000/openings/create`, {
+         method: "POST",
+         headers:{
+           'content-type': 'application/json'
+         },
+         body: JSON.stringify({project,client,technologies,role,desc,status})
+        }
+     );
+     const result = await res.json();
+     console.log(result);
+     if(res.status===401){
+      var path  = "http://localhost:3000/user/login";
+      window.location.replace(path);
+     }
+    if(res.status===400){
+      if(result.errors){
+        var str = '<ul>';
+         Object.values(result.errors).forEach(error => { 
+          str += '<li class="text-danger">'+ error.msg + '</li>';
+      })
+        str+='</ul>';
+        document.getElementById("error").innerHTML = str;
+      }else{
+        alert(result.message);
+        document.getElementById("error").innerHTML = "";
+      }
+   }else if(res.status===201){
+     alert(result.message)
+      var path  = "http://localhost:3000/openings";
+      window.location.replace(path);
+   }
+   }
+ </script>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/navigation %>
+  </header>
+
+  <div class="form-header text-primary">
+    <h2>Create Opening</h2>
+    </div>
+  <div id="error"></div>
+
+  <form id="createOpeningForm" onsubmit="return false;">
+    <div class="form-group">
+      <label for="project">Project</label>
+      <input type="text" class="form-control" name="project" aria-describedby="emailHelp" placeholder="Enter project" value="<%- opening.project%>">
+    </div>
+    <div class="form-group">
+      <label for="client">Client</label>
+      <input type="text" class="form-control" name="client" placeholder="Enter Client" value="<%- opening.client%>">
+    </div>
+    <div class="form-group">
+        <label for="technologies">Technologies</label>
+        <input type="text" class="form-control" name="technologies" aria-describedby="emailHelp" placeholder="Enter technologies comma separated" value="<%- opening.technologies%>">
+      </div>
+      <div class="form-group">
+        <label for="role">Role</label>
+        <input type="text" class="form-control" name="role" aria-describedby="emailHelp" placeholder="Enter role" value="<%- opening.role%>">
+      </div>
+      <div class="form-group">
+        <label for="desc">Description</label>
+        <input type="text" class="form-control" name="desc" aria-describedby="emailHelp" placeholder="Enter description" value="<%- opening.desc%>">
+      </div>
+      <div class="form-group">
+        <input type="hidden" class="form-control" name="status" value="Open">
+      </div>
+    <button type="submit" class="btn btn-primary" onclick="createOpening()">Submit</button>
+  </form>
+
+</body>
+
+<footer class="page-footer">
+  <% include ../partials/footer %>
+</footer>
+
+</html>

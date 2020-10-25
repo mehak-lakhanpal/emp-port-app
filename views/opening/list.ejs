@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/header %>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/navigation %>
+  </header>
+
+  <% if (openings.length !== 0) { %>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Project</th>
+        <th scope="col">Technologies</th>
+        <th scope="col">Role</th>
+        <%if (locals.isAuthenticated) { %>
+          <%if (locals.isAuthenticated==='employee') { %>
+            <th scope="col">Detail</th>
+        <% } %>
+        <% } %> 
+        <%if (locals.isAuthenticated) { %>
+          <%if (locals.isAuthenticated==='manager') { %>
+        <th scope="col">Update</th>
+        <% } %>
+        <% } %> 
+      </tr>
+    </thead>
+    <tbody>
+        <%for(let i=0; i<openings.length; i++) {%>
+      <tr>
+        <th scope="row"><%=i+1%></th>
+        <td><%=openings[i].project%></td>
+        <td><%=openings[i].technologies%></td>
+        <td><%=openings[i].role%></td>
+        <%if (locals.isAuthenticated) { %>
+          <%if (locals.isAuthenticated==='employee') { %>
+            <td><a href="/openings/<%=openings[i].id%>" class="btn btn-primary">See Detail</a></td>
+        <% } %>
+        <% } %>
+        <%if (locals.isAuthenticated) { %>
+        <%if (locals.isAuthenticated==='manager') { %>
+          <td><a href="/openings/update/<%=openings[i].id%>" class="btn btn-primary">Update</a></td>
+          <% } %>
+        <% } %> 
+      </tr>
+      <%}%>
+    </tbody>
+  </table>
+  <% } else { %>
+<h2>No openings</h2>
+    <% } %>
+
+</body>
+
+<footer class="page-footer">
+  <% include ../partials/footer %>
+</footer>
+
+</html>
