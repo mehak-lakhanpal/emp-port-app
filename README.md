@@ -7,7 +7,7 @@ This app is a employee portal store where employee can apply for available openi
 1.	Employee can only see available openings i.e. having Open status.
 2.	Manager can only see his/her openings i.e. which he has created and also he can see open and closed openings both.
 3.	Manager can open closed opening as well.
-4.      Authentication check does'nt apply on login and register page. So if a user already logged in and tries to open these pages. He can open and login or register again with different Username. In this case latest username will be authenticated and used.
+4.	Authentication check does'nt apply on login and register page. So if a user already logged in and tries to open these pages. He can open and login or register again with different Username. In this case latest username will be authenticated and used.     
 5.      Both employee and manager have to register first, if he/she uses this portal first time , then he has to select role i.e. employee or manager for registration.On the basis of role, functionality would be different.
 
 
@@ -137,16 +137,15 @@ Currently Server is running on http://localhost:3000
 	 Url - /openings Method: GET
 
 ### Response 
- [
-	{
+
+	[{
 	  _id: 68898yjbnfgrtr1j7gha
 	  project: project 1
 	  client: client 1
 	  role: Java Developer
 	  technologies: java
 	  description: description of the project
-        }
- ]
+        }]
 
 ## Get opening by id
 
