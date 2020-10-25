@@ -7,8 +7,7 @@ This app is a employee portal store where employee can apply for available openi
 1.	Employee can only see available openings i.e. having Open status.
 2.	Manager can only see his/her openings i.e. which he has created and also he can see open and closed openings both.
 3.	Manager can open closed opening as well.
-4.      Authentication check does'nt apply on login and register page. So if a user already logged in and tries to open these pages. He 
-	can open and login or register again with different Username. In this case latest username will be authenticated and used.
+4.      Authentication check does'nt apply on login and register page. So if a user already logged in and tries to open these pages. He can open and login or register again with different Username. In this case latest username will be authenticated and used.
 5.      Both employee and manager have to register first, if he/she uses this portal first time , then he has to select role i.e. employee or manager for registration.On the basis of role, functionality would be different.
 
 
@@ -27,16 +26,15 @@ For Manager
 
 1.	If a manager uses this portal first time, then he/she has to register himself or herself by selecting role Manager otherwise he/she has to login to use this portal.
 2.	After successfully login, he will receive message on the screen , then he/she can see all the openings created by himself or herself on Openings screen.
-3	On Openings screen, Manager can update particular opening by clicking on Update button.
-4.      By clicking on Update button, he will redirect into Update Opening screen where he can update opening and also close or open respective opening.
+3	On Openings screen, Manager can update particular opening by clicking on Update button.By clicking on Update button, he will redirect into Update Opening screen where he can update opening and also close or open respective opening.
 5.      Upon closing the opening, employee who have shown interest on particular opening will receive notification on console which is managed by custom events.
-6.     	On create openings screen , manager can create opening.
+6.     	On create openings screen , manager can create opening by entering all the fields.
 7.	Manager can Logout from the portal after clicking on logout button.
 
 # APIs
 
 Currently Server is running on http://localhost:3000
-Using cookie to store token , therefore user information retrieved from the token
+ And Using cookie to store token , therefore user information retrieved from the token
 
 ## Register user 
 
